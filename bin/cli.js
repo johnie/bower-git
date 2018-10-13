@@ -1,36 +1,60 @@
 #!/usr/bin/env node
-var bowerGit = require('../lib');
-var program = require('commander');
-var chalk = require('chalk');
+const bowerGit = require('../lib');
+const chalk = require('chalk');
+const isAsyncSupported = require('is-async-supported')
+const program = require('commander');
+const pkg = require('../package.json');
+const updateNotifier = require('update-notifier');
 
-var indent = '  ';
-var options;
+if (!isAsyncSupported()) {
+    require('async-to-gen/register');
+}
+
+(async () => {
+    await updateNotifier({
+        pkg
+    }).notify({ defer: false });
+})();
 
 program
-    .version(require('../package.json').version)
+    .version(
+        chalk`{bold.green Bower Git} version: {bold v${pkg.version}}\n`,
+        '-v, --version'
+    );
+
+
+program
     .arguments('<path>')
-    .option('-v, --verbose', '')
     .option('-b, --branch [value]', 'checkout specific branch', 'master')
-    // .action(function(path) {
-    //     var pathValue = path;
-    // })
+    .option('-l, --list <items>', 'checkout multiple items', val => val.split(','), [])
+    .option('--verbose', '')
     .parse(process.argv);
 
-if (!program.args.length) {
+const options = {
+    path: program.args[0],
+    branch: program.branch,
+    list: program.list
+};
+
+if (!process.argv.slice(2).length) {
     program.help();
 }
 
-options = {
-    path: program.args[0],
-    verbose: program.verbose,
-    branch: program.branch
-};
+program.on('option:verbose', function () {
+    process.env.VERBOSE = this.verbose;
+});
 
-// console.log(program);
-
-try {
-    bowerGit(options);
-} catch (err) {
-    console.error(chalk.red(indent + err));
+// error on unknown commands
+program.on('command:*', function () {
+    console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
     process.exit(1);
-}
+});
+
+(async () => {
+    try {
+        await bowerGit(options);
+    } catch (err) {
+        console.error(chalk.red(`${err}`));
+        process.exit(1);
+    }
+})();

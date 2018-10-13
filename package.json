@@ -4,7 +4,8 @@
   "description": "Replaces bower component folders with their git-repository counterpart",
   "preferGlobal": true,
   "bin": {
-    "bower-git": "./bin/cli.js"
+    "bower-git": "./bin/cli.js",
+    "bg": "./bin/cli.js"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -w",
@@ -32,13 +33,18 @@
     "proxyquire": "^1.7.3"
   },
   "dependencies": {
-    "bluebird": "^3.0.6",
+    "async-to-gen": "^1.4.0",
+    "bluebird": "^3.5.2",
     "chai": "^3.4.1",
-    "chalk": "^1.1.1",
+    "chalk": "^2.4.1",
+    "cli-ux": "^4.9.1",
     "commander": "^2.9.0",
     "del": "^2.2.0",
+    "execa": "^1.0.0",
+    "is-async-supported": "^1.2.0",
     "jscs": "^2.7.0",
     "mocha": "^2.3.4",
-    "sinon": "^1.17.2"
+    "sinon": "^1.17.2",
+    "update-notifier": "^2.5.0"
   }
 }
