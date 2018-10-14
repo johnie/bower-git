@@ -38,12 +38,15 @@
     "chai": "^3.4.1",
     "chalk": "^2.4.1",
     "cli-ux": "^4.9.1",
+    "clipboardy": "^1.2.3",
     "commander": "^2.9.0",
     "del": "^2.2.0",
     "execa": "^1.0.0",
     "is-async-supported": "^1.2.0",
     "jscs": "^2.7.0",
     "mocha": "^2.3.4",
+    "ora": "^3.0.0",
+    "prompt-confirm": "^2.0.4",
     "sinon": "^1.17.2",
     "update-notifier": "^2.5.0"
   }

@@ -25,14 +25,17 @@ program
 
 program
     .arguments('<path>')
+    .option('--verbose', 'verbose mode', false)
+    .option('-g, --goto', 'go to component', false)
     .option('-b, --branch [value]', 'checkout specific branch', 'master')
     .option('-l, --list <items>', 'checkout multiple items', val => val.split(','), [])
-    .option('--verbose', '')
     .parse(process.argv);
 
 const options = {
+    verbose: process.env.VERBOSE,
     path: program.args[0],
     branch: program.branch,
+    goto: program.goto,
     list: program.list
 };
 
