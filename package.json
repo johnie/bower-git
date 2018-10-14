@@ -37,7 +37,6 @@
     "bluebird": "^3.5.2",
     "chai": "^3.4.1",
     "chalk": "^2.4.1",
-    "cli-ux": "^4.9.1",
     "clipboardy": "^1.2.3",
     "commander": "^2.9.0",
     "del": "^2.2.0",
