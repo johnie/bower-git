@@ -9,33 +9,33 @@ var chaiAsPromised = require('chai-as-promised');
 
 chai.use(chaiAsPromised);
 
-describe('bower-git', function() {
+describe('bower-git', () => {
     var module;
 
-    it('should throw if path is not supplied', function() {
+    it('should throw if path is not supplied', () => {
         // align
         module = require('../lib');
 
         // act
-        expect(function() {
+        expect(() => {
             module();
         }).to.throw('ABORTING: No path provided!');
 
         // assert
     });
 
-    it('should throw if path does not exist', function() {
+    it('should throw if path does not exist', () => {
         // align
         module = proxyquire('../lib', {
             fs: {
-                existsSync: function() {
+                existsSync: () => {
                     return false;
                 }
             }
         });
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -44,7 +44,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if bower.json does not exist in path', function() {
+    it('should throw if bower.json does not exist in path', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.onCall(0).returns(true);
@@ -57,7 +57,7 @@ describe('bower-git', function() {
         });
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -66,7 +66,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if bower.json does contain repository information', function() {
+    it('should throw if bower.json does contain repository information', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.returns(true);
@@ -85,7 +85,7 @@ describe('bower-git', function() {
         });
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -94,7 +94,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if bower.json does contain repository url information', function() {
+    it('should throw if bower.json does contain repository url information', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.returns(true);
@@ -113,7 +113,7 @@ describe('bower-git', function() {
         });
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -122,7 +122,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if bower.json does contain repository type information', function() {
+    it('should throw if bower.json does contain repository type information', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.returns(true);
@@ -143,7 +143,7 @@ describe('bower-git', function() {
         });
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -152,7 +152,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if it\'s not a git repository', function() {
+    it('should throw if it\'s not a git repository', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.returns(true);
@@ -174,7 +174,7 @@ describe('bower-git', function() {
         });
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -183,7 +183,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if exec(git) fails', function() {
+    it('should throw if exec(git) fails', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.returns(true);
@@ -214,7 +214,7 @@ describe('bower-git', function() {
         module.testMode = true;
 
         // act
-        expect(function() {
+        expect(() => {
             module({
                 path: 'hejsan'
             });
@@ -223,7 +223,7 @@ describe('bower-git', function() {
         // assert
     });
 
-    it('should throw if deleting bower component folder fails', function() {
+    it('should throw if deleting bower component folder fails', () => {
         // align
         var existsSyncStub = sinon.stub();
         existsSyncStub.returns(true);
@@ -250,7 +250,7 @@ describe('bower-git', function() {
                     callback(err);
                 }
             },
-            del: function() {
+            del: () => {
                 return new Promise(function(resolve, reject) {
                     reject();
                 });
