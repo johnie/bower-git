@@ -25,18 +25,18 @@ program
 
 program
     .arguments('<path>')
-    .option('--verbose', 'verbose mode', false)
-    .option('-g, --goto', 'go to component', false)
     .option('-b, --branch [value]', 'checkout specific branch', 'master')
-    .option('-l, --list <items>', 'checkout multiple items', val => val.split(','), [])
+    .option('-f, --force [y/n]', 'force checkout component', false)
+    .option('-g, --goto [y/n]', 'copy component path', false)
+    .option('-v, --verbose [y/n]', 'verbose mode', false)
     .parse(process.argv);
 
 const options = {
-    verbose: process.env.VERBOSE,
     path: program.args[0],
     branch: program.branch,
+    force: program.force,
     goto: program.goto,
-    list: program.list
+    verbose: process.verbose
 };
 
 if (!process.argv.slice(2).length) {
@@ -45,12 +45,6 @@ if (!process.argv.slice(2).length) {
 
 program.on('option:verbose', function () {
     process.env.VERBOSE = this.verbose;
-});
-
-// error on unknown commands
-program.on('command:*', function () {
-    console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
-    process.exit(1);
 });
 
 (async () => {
